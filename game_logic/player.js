@@ -11,15 +11,14 @@ import FireAnim from
   './animation_logic/points_anim.js';
 
 class Player {
-  constructor(name, obj) {
-    this.name = name || "Richie";
+  constructor(obj) {
+    this.name = obj ? obj.name : "Richie";
     this.defaultClockSpeed = obj ? obj.defaultClockSpeed : 2;
     this.clock = obj ? obj.clock : null;
     this.tempMessage =
       obj ? obj.tempMessage
       : "I'm the brains, you're the muscle!  Use your muscles to move the mouse!";
     this.currentEmotion = obj ? obj.currentEmotion : "excited";
-    this.info = obj ? obj.info : "";
 
     this.dayNum = obj ? obj.dayNum : 1;
     this.sleepBank = obj ? obj.sleepBank : 100;
@@ -30,7 +29,7 @@ class Player {
     this.currentPos = obj ? obj.currentPos : 0;
     this.lastCurrentPos = obj ? obj.lastCurrentPos : -1;
     this.message = obj ? obj.message : "";
-    this.onFire = obj ? obj.onFire : false;
+    this.onFire = false;
     this.fire = undefined;
     this.leaving = false;
     this.talkingToCandanessa = false;
@@ -50,7 +49,7 @@ class Player {
     this.weekNum = Math.floor(this.dayNum / 7) + 1;
     this.weekDay = this.dayNum % 7;
 
-    this.skills = obj ? obj.skill : {
+    this.skills = obj ? obj.skills : {
       ruby: 0,
       rails: 0,
       sql: 0,
@@ -58,7 +57,9 @@ class Player {
       react: 0,
       redux: 0
     };
-    this.currentSkill = Object.keys(this.skills)[this.weekNum - 1];
+
+    this.currentSkill = ["ruby","rails","sql","javaScript","react","redux"][this.weekNum - 1];
+    console.log(this.currentSkill);
     this.fireOff = this.fireOff.bind(this);
     this.newOnFire = this.newOnFire.bind(this);
     this.weekDayText = this.weekDayText.bind(this);

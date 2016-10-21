@@ -4,6 +4,7 @@ import { FIREBASE_CONFIG } from '../config';
 export const firebaseApp = firebase.initializeApp(FIREBASE_CONFIG);
 export const firebaseAuth = firebaseApp.auth();
 export const firebaseDb = firebaseApp.database();
+export const firebaseStorage = firebase.storage();
 
 var FireBaseTools = {
 

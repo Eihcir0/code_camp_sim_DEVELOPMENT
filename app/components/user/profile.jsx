@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import firebase from '../../utils/firebase';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {fetchUser, updateUser, fetchUserData, setUserData}  from '../../actions/firebase_actions';
+import {fetchUser, updateUser, fetchUserData, setUserData}  from '../../redux-actions/firebase_actions';
 import Loading  from '../helpers/loading';
 import GameMain from './../../../frontend/components/game_main.jsx';
 class UserProfile extends Component {

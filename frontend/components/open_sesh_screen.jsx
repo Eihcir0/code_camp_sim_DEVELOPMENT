@@ -1,4 +1,9 @@
 import React from 'react';
+import firebase from '../../app/utils/firebase';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {fetchUser, updateUser, fetchUserData, setUserData}  from '../../app/redux-actions/firebase_actions';
+
 import Secretary from './../../game_logic/animation_logic/secretary.js';
 import Desk from './../../game_logic/animation_logic/desk.js';
 import Clock from './../../game_logic/clock.js';
@@ -194,7 +199,28 @@ class OpenSesh extends React.Component {
   }
 
   handleSave() {
-    this.player.tempMessage = "🚧 This feature is currently in development 🚧";
+    var p = this.player;
+    var playerObj = {
+      name: p.name,
+      defaultClockSpeed: p.defaultClockSpeed,
+      currentEmotion: p.currentEmotion,
+      dayNum: p.dayNum,
+      sleepBank: p.sleepBank,
+      happiness: p.happiness,
+      focus: p.focus,
+      score: p.score,
+      session: p.session,
+      currentPos: p.currentPos,
+      lastCurrentPos: p.lastCurrentPos,
+      message: p.message,
+      onFire: p.onFire,
+      strikes: p.strikes,
+      assessments: p.assessments.join(","),
+      skills: p.skills
+    };
+    this.props.setUserData(this.props.currentUser.uid, playerObj);
+    this.player.tempMessage = "GAME DATA SAVED";
+    // this.player.tempMessage = "🚧 This feature is currently in development 🚧";
   }
 
 
@@ -312,7 +338,6 @@ class OpenSesh extends React.Component {
        case 5:
          return "If you drink coffee too late, you won't be able to fall asleep at night.";
        default:
-         console.log("some weird numbe showed up when getting the candanessa message  " + x);
 
      }
    }
@@ -397,6 +422,7 @@ class OpenSesh extends React.Component {
 
 
   quadrants() {
+
     if (this.player.day.eatingLunch || this.leavingTime){return null;}
     var candanessa = null;
     var kitchen = null;
@@ -695,6 +721,16 @@ class OpenSesh extends React.Component {
   }
 
 }//end component
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({fetchUser, fetchUserData, setUserData}, dispatch);
+}
+
+
+function mapStateToProps(state) {
+  return {currentUser: state.currentUser,
+          userData: state.userData};
+}
 
 
 export default OpenSesh;

@@ -13,7 +13,7 @@ import routes from './routes';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 const store = createStoreWithMiddleware(reducers);
-window.store = store;
+window.store = store; 
 
 
 ReactDOM.render(

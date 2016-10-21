@@ -1,4 +1,10 @@
 import React from 'react';
+import firebase from 'firebase';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {fetchUser, updateUser, fetchUserData, setUserData}  from '../../app/redux-actions/firebase_actions';
+
+
 import Game from './../../game_logic/game.js';
 import Player from './../../game_logic/player.js';
 import Clock from './../../game_logic/clock.js';
@@ -19,7 +25,10 @@ class GameMain extends React.Component {
   constructor() {
     super();
     //HAVE TO DEAL WITH ATE LUNCH SHIT - reset each day, these should be tracked in day
-    this.player = new Player("Guest");
+    // var obj = this.props.userData;
+
+    //SUPER FUCKING JANKY:
+    this.player = new Player();
     this.player.loading = true;
     if (this.player.week===undefined) {
       this.week = new Week(this.player);
@@ -29,7 +38,7 @@ class GameMain extends React.Component {
       this.week = this.player.week;
     }
     this.player.clock.pause();
-    this.playerAnim = new playerAnim({player: this.player});
+    // this.playerAnim = new playerAnim({player: this.player});
 
     this.state = {
       currentPos: -1,
@@ -37,7 +46,11 @@ class GameMain extends React.Component {
       clock: this.player.clock.time(),
       ruby: this.player.skills.ruby,
       focus: this.player.focus
-    };
+        };
+        debugger;
+    this.imagesRef = firebase.storage().ref().child('images');
+    this.soundsRef = firebase.storage().ref().child('sounds');
+    this.faceIconsRef = this.imagesRef.child('face_icons');
     this.attributeTicker = 0;
     this.tick = this.tick.bind(this);
     this.updateAttributes = this.updateAttributes.bind(this);
@@ -47,7 +60,7 @@ class GameMain extends React.Component {
     this.gameOver = this.gameOver.bind(this);
     this.ticksPerSecond = 100; //<<=If changed then update Clock class
     this.intervalTime = 1000 / this.ticksPerSecond;
-
+    this.loaded = false;
   }
 
   tick() {
@@ -157,13 +170,33 @@ class GameMain extends React.Component {
     }
 
     handleOpen() {
+      console.log(this.props.userData);
+      this.player = new Player(this.props.userData);
+      window.player = this.player;
+      this.player.assessments = []; // deleteme;
+      this.player.loading = true;
+      this.week = new Week(this.player);
+      this.player.week = this.week;
+      this.player.day = this.week.day;
+      this.player.clock.pause();
+      this.playerAnim = new playerAnim({player: this.player});
+
+      this.setState({
+        currentPos: -1,
+        message: this.player.message,
+        clock: this.player.clock.time(),
+        ruby: this.player.skills.ruby,
+        focus: this.player.focus
+      });
+
       this.player.clock.unpause();
       this.player.loading = false;
+      this.loaded = true;
       this.interval = window.setInterval(this.tick,this.intervalTime);
     }
 
   gameOver() {
-    
+
     switch (true) {
       case (this.player.assessments.includes("FAIL")):
         return "You failed an assessment.  You've been asked to leave the program.";
@@ -186,6 +219,9 @@ class GameMain extends React.Component {
       return <button className="leave-button-big" onClick={this.handleOpen}>
         PRESS TO START </button>;
       }
+    if (!(this.loaded)) {
+      return <div/>
+;    }
     if (this.player.newStrike) {
       this.player.clock.pause();
       return (
@@ -263,9 +299,9 @@ class GameMain extends React.Component {
             </div>
             <div className="stats-bar">
               <meter value={this.player.sleepBank} min="0" max="100" low="30" high="70" optimum="100"/>
-              <img className="icon" src="./app/assets/images/bed.png" />
+              <img className="icon" src="https://firebasestorage.googleapis.com/v0/b/code-camp-sim.appspot.com/o/images%2Fbed.png?alt=media&token=b8c0a970-74cc-4b2e-ab06-813c5f09fa21" />
               <meter value={this.player.happiness} min="0" max="100" low="30" high="70" optimum="100"/>
-              <img className="icon" src="./app/assets/images/happy.png" />
+              <img className="icon" src={firebase.storage().ref().child('images/happy.png').getDownloadURL()} />
               <meter value={this.player.focus} min="0" max="100" low="30" high="70" optimum="100"/>
               <img className="icon" src="./app/assets/images/star.png" /><br/>
               <span className="score">{this.player.score}</span><br/>
@@ -299,4 +335,16 @@ class GameMain extends React.Component {
 
 }//end component
 
-export default GameMain;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({fetchUser, fetchUserData, setUserData}, dispatch);
+}
+
+
+function mapStateToProps(state) {
+
+  return {currentUser: state.currentUser,
+          userData: state.userData};
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameMain);

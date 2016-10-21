@@ -47,9 +47,9 @@ class SkillAnim extends StudyIcon {
         return "./app/assets/images/ruby.png";
       default:
         return undefined;
+      }
+    }
 
-    }
-    }
     updateAnim(elapsed) {
       this.animTimer += elapsed;
       if (this.animTimer >= this.animDelay) {
@@ -74,20 +74,20 @@ class SkillAnim extends StudyIcon {
 
 
 
-    render() {
-      this.ctx.drawImage(
-      this.image,
-      0,
-      0,
-      this.width,
-      this.height,
-      this.pos[0],
-      this.pos[1],
-      20,
-      16
-      );
-    }
+  render() {
 
+    this.ctx.drawImage(
+    this.image,
+    0,
+    0,
+    this.width,
+    this.height,
+    this.pos[0],
+    this.pos[1],
+    20,
+    16
+    );
+  }
 } //end class
 
 export default SkillAnim;

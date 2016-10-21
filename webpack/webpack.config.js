@@ -60,7 +60,8 @@ module.exports = (options) => {
       test: /\.scss$/,
       loader: ExtractSASS.extract(['css', 'sass']),
     });
-  } else {
+  }
+  else {
     webpackConfig.plugins.push(
       new Webpack.HotModuleReplacementPlugin()
     );

@@ -98,7 +98,6 @@ class AssessmentSesh extends React.Component {
     } else {
       this.player.assessments.push("FAIL");
       var clock = new Clock([12,1]);
-      debugger;
       this.player.currentPos = 0;
       this.player.clock = clock;
     }

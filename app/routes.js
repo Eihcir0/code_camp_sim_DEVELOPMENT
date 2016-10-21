@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './components/app';
 
-import HomeIndex from './components/index_home';
+
 import UserLogin from './components/user/login';
 import UserProfile from './components/user/profile';
 import ResetPassword from './components/user/reset_password';
@@ -17,7 +17,7 @@ const above = () => {
 
 export default (
   <Route path="/"  component={App}>
-    <IndexRoute component={HomeIndex} />
+    <IndexRoute component={UserLogin} />
     <Route path="/login" component={UserLogin} />
     <Route path="/reset" component={ResetPassword} />
     <Route path="/profile" onEnter={above} component={UserProfile}  />
