@@ -35,7 +35,7 @@ class FoodAnim extends StudyIcon {
         this.animDelay = 20;
         this.animTimer = 0;
         this.sizeMultiplier = 3;
-        this.sound = new Audio("./app/assets/sounds/coffee.wav");
+        this.sound = new Audio(window.assets.sounds['coffee.wav']);
         break;
       case "donut":
         this.width = 256;
@@ -47,7 +47,7 @@ class FoodAnim extends StudyIcon {
         this.animDelay = 20;
         this.animTimer = 0;
         this.sizeMultiplier = 3;
-        this.sound = new Audio("./app/assets/sounds/donut.wav");
+        this.sound = new Audio(window.assets.sounds['donut.wav']);
         break;
       case "lunch":
         this.width = 256;
@@ -59,7 +59,7 @@ class FoodAnim extends StudyIcon {
         this.animDelay = 20;
         this.animTimer = 0;
         this.sizeMultiplier = 3;
-        this.sound = new Audio("./app/assets/sounds/microwave.wav");
+        this.sound = new Audio(window.assets.sounds['microwave.wav']);
         break;
       default:
         break;
@@ -69,11 +69,11 @@ class FoodAnim extends StudyIcon {
     getImage() {
     switch (this.foodType) {
       case "coffee":
-        return "./app/assets/images/coffee.png";
+        return window.assets.images['coffee.png'];
       case "donut":
-        return "./app/assets/images/donut.png";
+        return window.assets.images['donut.png'];
       case "lunch":
-        return "./app/assets/images/lunch.png";
+        return window.assets.images['lunch.png'];
       default:
         return undefined;
 

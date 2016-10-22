@@ -49,7 +49,7 @@ class CongratsScreen extends React.Component {
   render () {
     return (
       <div className="congrats" onClick={this.handleClick}>  CONGRATULATIONS!!!
-        <img src={this.ned2Image}/>
+        <img src={this.ned2Image} className="congrats-teacher-image"/>
 
       </div>
     );

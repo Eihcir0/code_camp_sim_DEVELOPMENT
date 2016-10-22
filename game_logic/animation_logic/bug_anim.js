@@ -20,8 +20,8 @@ class BugAnim extends StudyIcon {
     this.animTimer = 0; // ??
     this.imageReady = false;
     this.image = new Image();
-    this.image.src = "./app/assets/images/bug.png";
-    this.sound = new Audio("./app/assets/sounds/bug_sound.wav");
+    this.image.src = window.assets.images['bug.png'];
+    this.sound = new Audio(window.assets.sounds['bug_sound.wav']);
     this.sound.playbackRate = 0.75+(Math.random()/2);
     this.sound.play();
     this.moves = 0;

@@ -113,6 +113,7 @@ var FireBaseTools = {
    */
   loginUser: (user) => {
     return firebaseAuth.signInWithEmailAndPassword(user.email, user.password).then(user => {
+      console.log(user);
       return user;
     }).catch(error => {
       return {

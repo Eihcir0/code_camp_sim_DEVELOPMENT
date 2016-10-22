@@ -21,8 +21,8 @@ class FireAnim extends Moveable {
     this.imageReady = false;
     this.image = new Image();
     this.image.src =
-    "./app/assets/images/fire.png";
-    this.sound = new Audio("./app/assets/sounds/hes_on_fire.wav");
+    window.assets.images['fire.png'];
+    this.sound = new Audio(window.assets.sounds['hes_on_fire.wav']);
     window.setTimeout(()=>this.sound.play(),10);
     this.moves = 0;
     this.times = 0;
@@ -36,7 +36,7 @@ class FireAnim extends Moveable {
         this.animTimer = 0;
         this.animFrame++;
         if (this.times %3 ===0 && this.animFrame === this.animNumFrames) {
-          this.player.fireSound=new Audio("./app/assets/sounds/fire.wav");
+          this.player.fireSound=new Audio(window.assets.sounds['fire.wav']);
           this.player.fireSound.play();}
         if (this.animFrame > this.animNumFrames) {
           this.animFrame = 0;

@@ -13,7 +13,7 @@ class SkillAnim extends StudyIcon {
     this.imageReady = false;
     this.image = new Image();
     this.image.src = this.getImage();
-    this.sound = new Audio("./app/assets/sounds/icon.wav");
+    this.sound = new Audio(window.assets.sounds['icon.wav']);
     window.setTimeout(()=>this.sound.play(),1);
     this.moves = 0;
     this.sunset = (Math.floor(Math.random()*2)-0.5) > 0 ? -1 : 1;
@@ -44,7 +44,7 @@ class SkillAnim extends StudyIcon {
     getImage() {
     switch (this.value) {
       case "ruby":
-        return "./app/assets/images/ruby.png";
+        return window.assets.images['ruby.png'];
       default:
         return undefined;
       }

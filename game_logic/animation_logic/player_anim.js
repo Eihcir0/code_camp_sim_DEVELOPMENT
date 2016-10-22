@@ -31,11 +31,11 @@ class PlayerAnim extends Moveable {
 
     this.imageSheet = new Image();
     this.imageSheet.src =
-    "./app/assets/images/hero_spritesheet.png";
+    window.assets.images['hero_spritesheet.png'];
     this.imageSeated = new Image();
     this.imageSeated.src =
-    "./app/assets/images/hero_seated_spritesheet.png";
-    this.soundTyping = new Audio("./app/assets/sounds/typing.wav");
+    window.assets.images['hero_seated_spritesheet.png'];
+    this.soundTyping = new Audio(window.assets.sounds['typing.wav']);
     this.soundTyping.autoplay = true;
     this.soundTyping.load();
     this.animationOn = true;

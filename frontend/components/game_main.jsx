@@ -5,7 +5,6 @@ import {bindActionCreators} from 'redux';
 import {fetchUser, updateUser, fetchUserData, setUserData}  from '../../app/redux-actions/firebase_actions';
 
 
-import Game from './../../game_logic/game.js';
 import Player from './../../game_logic/player.js';
 import Clock from './../../game_logic/clock.js';
 import Week from './../../game_logic/week.js';

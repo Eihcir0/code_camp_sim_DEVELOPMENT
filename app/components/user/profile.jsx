@@ -1,14 +1,30 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import { Route, IndexRoute } from 'react-router';
 import {bindActionCreators} from 'redux';
 import {fetchUser, updateUser, fetchUserData, setUserData}  from '../../redux-actions/firebase_actions';
-import Loading  from '../helpers/loading';
 import GameMain from './../../../frontend/components/game_main.jsx';
+import firebase from 'firebase';
+
+
+
+
 class UserProfile extends Component {
 
   constructor(props) {
     super(props);
-    var userId = this.props.currentUser.uid;
+    if (!(this.props.currentUser)) {
+      const data = JSON.parse(localStorage.getItem(localStorage.key(1)));
+      if (!data.uid) {
+          replace({
+              pathname: '/login',
+              state: {
+                  nextPathname: nextState.location.pathname,
+              },
+          });
+      }
+    }
+
     // var userData = this.props.fetchUserData(userId);
     // console.log(userData);
     // this.props.setUserData(userId, "ham");
@@ -22,10 +38,7 @@ class UserProfile extends Component {
   }
 
   render() {
-    if (!this.props.currentUser) {
-      return <Loading/>;
-    }
-
+  
     return (
       <div className="col-md-6">
         <GameMain />

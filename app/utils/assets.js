@@ -24,8 +24,9 @@ class Assets {
           });
           break;
         case 3:
-          that.faceIconsRef.child(asset[0]).getDownloadURL().then(function(url) {
+          that.soundsRef.child(asset[0]).getDownloadURL().then(function(url) {
             that.sounds[asset[0]] = url;
+            var tester3 = new Audio(url);
           });
           break;
         default:
@@ -38,13 +39,40 @@ class Assets {
 
   assetListMaker() { // 1 = image, 2 = face icon, 3 = sound
     return ([
+      ['ned3-blur.png',1],
+      ['ned3.png',1],
+      ['rays.jpeg',1],
+      ['eyes_open.png',1],
+      ['eyes_closed.png',1],
+      ['newfloor.png',1],
+      ['line_explosion.jpg',1],
+      ['computer_screen2.png',1],
+      ['frontface2.png',1],
+      ['moon.png',1],
+      ['sheep2.png',1],
+      ['ned1.png',1],
+      ['bug.png',1],
+      ['desks.png',1],
+      ['desks2.png',1],
+      ['fire.png',1],
+      ['coffee.png',1],
+      ['donut.png',1],
+      ['lunch.png',1],
+      ['hero_spritesheet.png',1],
+      ['hero_seated_spritesheet.png',1],
+      ['secretary.png',1],
+      ['empty_secretary.png',1],
+      ['ruby.png',1],
+      ['student1.png',1],
+      ['student2.png',1],
+      ['student3.png',1],
+      ['student4.png',1],
+      ['student5.png',1],
+      ['student6.png',1],
       ["bed.png",1],
       ["happy.png",1],
       ["star.png",1],
       ["ned2.png",1],
-      ['congrats-ding.wav', 3],
-      ['buzzer.mp3', 3],
-      ['explosion.wav', 3],
       ['rested_happy_look_left.jpg', 2],
       ['rested_unhappy_look_left.jpg', 2],
       ['blink.jpg', 2],
@@ -62,27 +90,30 @@ class Assets {
       ['exhausted_sad.jpg',2],
       ['rested_sad.jpg',2],
       ['tired_indifferent.jpg',2],
-      ['exhausted_sad',2],
-      ['rested_angry',2],
-      ['tired_angry',2],
+      ['exhausted_sad.jpg',2],
+      ['rested_angry.jpg',2],
+      ['tired_angry.jpg',2],
       ['tired_miserable.jpg',2],
       ['exhausted_angry.jpg',2],
+      ['typing.wav',3],
+      ['missed.wav',3],
+      ['beep.wav',3],
+      ['congrats-ding.wav', 3],
+      ['buzzer.mp3', 3],
+      ['explosion.wav', 3],
       ['opening_lecture.wav',3],
       ['Rock-a-bye Baby.mp3',3],
       ['trippy.wav',3],
-      ['ned3-blur.png',1],
-      ['ned3.png',1],
-      ['rays.jpeg',1],
-      ['eyes_open.png',1],
-      ['eyes_closed.png',1],
-      ['newfloor.png',1],
       ['microwave_start.wav',3],
       ['shot.wav',3],
-      ['line_explosion.jpg',1],
-      ['missed.wav',3],
-      ['beep.wav',3],
-      ['computer_screen2.png',1],
-      ['typing.wav',3],
+      ['bug_sound.wav',3],
+      ['hes_on_fire.wav',3],
+      ['fire.wav',3],
+      ['coffee.wav',3],
+      ['donut.wav',3],
+      ['microwave.wav',3],
+      ['woohoo.wav',3],
+      ['icon.wav',3]
 
     ]);
   }

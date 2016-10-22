@@ -13,14 +13,15 @@ class UserLogin extends Component {
     this.onRegisterFormSubmit = this.onRegisterFormSubmit.bind(this);
     this.loginWithProvider = this.loginWithProvider.bind(this);
     this.state = {
-      message: '',
+      message1: '',
+      message2: '',
     };
   }
 
   loginWithProvider(provider) {
     this.props.loginWithProvider(provider).then(data => {
       if (data.payload.errorCode)
-        this.setState({ message: data.payload.errorMessage })
+        this.setState({ message1: data.payload.errorMessage })
       else
         // this.props.fetchUserData(this.)
         browserHistory.push('/profile');
@@ -35,7 +36,7 @@ class UserLogin extends Component {
     const password = this.refs.password2.value;
     this.props.registerUser({ email, password }).then((data) => {
         if (data.payload.errorCode)
-          this.setState({ message: data.payload.errorMessage });
+          this.setState({ message2: data.payload.errorMessage });
         else
         browserHistory.push('/profile');
     }
@@ -51,7 +52,7 @@ class UserLogin extends Component {
     this.props.loginUser({ email: email, password: password }).then(data => {
 
       if (data.payload.errorCode)
-        this.setState({ message: data.payload.errorMessage });
+        this.setState({ message1: data.payload.errorMessage });
       else
         this.props.fetchUserData(this.props.currentUser.uid).then(() => {
         browserHistory.push('/profile');
@@ -68,7 +69,7 @@ class UserLogin extends Component {
       <div className="col-md-4">
         <form id="frmLogin" role="form" onSubmit={this.onLoginFormSubmit}>
           <p>
-            {this.state.message}
+            {this.state.message1}
           </p>
           <h2>Login</h2>
           <div className="form-group">
@@ -89,7 +90,7 @@ class UserLogin extends Component {
       </div>
       <div className="col-md-4">
         <form id="frmRegister" role="form" onSubmit={this.onRegisterFormSubmit}>
-          <p>{this.state.message}</p>
+          <p>{this.state.message2}</p>
           <h2>Sign Up</h2>
           <div className="form-group">
             <label htmlFor="txtRegEmail">Email address</label>
