@@ -8,7 +8,7 @@ class PairsSeshDrivingScreen extends React.Component {
     // this.main = this.main.bind(this);
     this.sentenceTexts = ["test","def my_each","(&prc)","self.length.times do |i|", "prc.call","(self[i])", "end", "self", "end", "def my_select","(&prc)", "selects = []", "self.my_each do |item|", "if prc.call(item)", "selects << item", "end", "end", "selects", "end"];
     this.explosions = [];
-    this.shotSound = new Audio ("./app/assets/sounds/shot.wav");
+    this.shotSound = new Audio (window.assets.sounds['shot.wav']);
     this.state= {
       currentInput: "",
     };
@@ -29,7 +29,7 @@ class PairsSeshDrivingScreen extends React.Component {
     this.over = false;
     this.yPosIncrement = 2;
     this.explosionImage = new Image ();
-    this.explosionImage.src = "./app/assets/images/line_explosion.jpg";
+    this.explosionImage.src = window.assets.images['line_explosion.jpg'];
     if (this.sentences.length === 0) {this.initializeSentences();}
   }
 
@@ -138,7 +138,7 @@ class PairsSeshDrivingScreen extends React.Component {
     if (this.sentences[0].yPos <= 200) {
         if (!(this.sentences[0].exploded)) {
         this.props.drivingLines[1]++;
-        new Audio ("./app/assets/sounds/missed.wav").play();}
+        new Audio (window.assets.sounds['missed.wav']).play();}
         this.addNewSentence();
         if (this.sentences[0].active) {
           this.sentences[1].active = true;
@@ -164,7 +164,7 @@ class PairsSeshDrivingScreen extends React.Component {
     if (e.keyCode===13 && this.state.currentInput.length>1) {
       var a = this.findActive();
       if (this.state.currentInput == this.sentences[this.findActive()].text) {
-          new Audio ("./app/assets/sounds/explosion.wav").play();
+          new Audio (window.assets.sounds['explosion.wav']).play();
           this.addExplosion(this.sentences[a]);
           this.sentences[a+1].active = true;
           this.sentences[a].exploded = true;
@@ -173,7 +173,7 @@ class PairsSeshDrivingScreen extends React.Component {
           this.props.drivingLines[1]++;
         }
       else {
-        new Audio ("./app/assets/sounds/missed.wav").play();
+        new Audio (window.assets.sound['missed.wav']).play();
         this.sentences[a].active=false;
         this.sentences[a].done = true;
         this.sentences[a+1].active=true;
@@ -183,9 +183,9 @@ class PairsSeshDrivingScreen extends React.Component {
         this.setState({currentInput: ""});
     } else if (e.keyCode!==8) {
         if (this.sentences[this.findActive()].text[this.state.currentInput.length]==e.key) {
-          new Audio ("./app/assets/sounds/shot.wav").play();
+          new Audio (window.assets.sounds['shot.wav']).play();
         } else {
-          new Audio ("./app/assets/sounds/beep.wav").play();
+          new Audio (window.assets.sounds['beep.wav']).play();
         }
       }
   }
@@ -217,7 +217,7 @@ class PairsSeshDrivingScreen extends React.Component {
         width="800"
         height="520"/>
 
-      <img src="./app/assets/images/computer_screen2.png" className="pairs-computer-screen"/>
+      <img src={window.assets.images['computer_screen2.png']} className="pairs-computer-screen"/>
         <div className="pairs-input-text">
           <textarea id="pairs-input"
             value={this.state.currentInput}

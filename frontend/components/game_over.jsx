@@ -7,7 +7,7 @@ class GameOver extends React.Component {
     this.player.clock.pause();
     this.startTime = Date.now();
     this.reason = this.props.reason;
-    this.buzzerSound = new Audio("./app/assets/sounds/buzzer.mp3");
+    this.buzzerSound = new Audio(window.assets.sounds['buzzer.mp3']);
     this.buzzerSound.play();
     this.player.tempMessage = this.reason;
     this.handleClick = this.handleClick.bind(this);

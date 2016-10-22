@@ -6,9 +6,12 @@ class CongratsScreen extends React.Component {
     super(props);
     this.player = this.props.player;
     this.congrats = this.player.newCongrats;
+
     this.startTime = Date.now();
-    this.buzzerSound = new Audio("./app/assets/sounds/congrats-ding.wav");
+    this.buzzerSound = new Audio(window.assets.sounds['congrats-ding.wav']);
     this.buzzerSound.play();
+    this.ned2Image = window.assets.images['ned2.png'];
+
     this.player.happiness += 5;
 
     this.skill = this.player.currentSkill;
@@ -46,7 +49,7 @@ class CongratsScreen extends React.Component {
   render () {
     return (
       <div className="congrats" onClick={this.handleClick}>  CONGRATULATIONS!!!
-        <img src="./app/assets/images/ned2.png" className="congrats-teacher-image"/>
+        <img src={this.ned2Image}/>
 
       </div>
     );

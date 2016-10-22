@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 class FaceAnim extends React.Component {
   constructor(props) {
     super(props);
@@ -12,7 +11,6 @@ class FaceAnim extends React.Component {
     this.winkCounter=0;
     this.fireCounter=0;
     this.state={face: null};
-    // this.player = this.props.player;
 
   }
 
@@ -21,7 +19,8 @@ class FaceAnim extends React.Component {
   }
 
   getDiv(filename) {
-    var fullName = `./app/assets/images/face_icons/${filename}.jpg`;
+
+    var fullName = window.assets.faceIcons[`${filename}.jpg`];
     return (
       <div>
         <img className="player-pic"

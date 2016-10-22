@@ -31,7 +31,7 @@ class PairsSeshNavigatingScreen extends React.Component {
     this.over = false;
     this.yPosIncrement = 2;
     this.explosionImage = new Image ();
-    this.explosionImage.src = "./app/assets/images/line_explosion.jpg";
+    this.explosionImage.src = window.assets.images['line_explosion.jpg'];
     if (this.sentences.length === 0) {this.initializeSentences();}
 
   }
@@ -146,7 +146,7 @@ class PairsSeshNavigatingScreen extends React.Component {
     if (this.sentences[0].yPos <= 200) {
         if (!(this.sentences[0].exploded) && !(this.sentences[0].done)) {
           this.props.navigatingLines[1]++;
-          new Audio ("./app/assets/sounds/missed.wav").play();}
+          new Audio (window.assets.sounds['missed.wav']).play();}
         this.addNewSentence();
         if (this.sentences[0].active) {
           this.sentences[1].active = true;
@@ -172,7 +172,7 @@ class PairsSeshNavigatingScreen extends React.Component {
     if (e.keyCode===13) {
       var a = this.findActive();
       if (this.state.currentInput == this.sentences[a].text) {
-          new Audio ("./app/assets/sounds/explosion.wav").play();
+          new Audio (window.assets.sounds['explosion.wav']).play();
           this.addExplosion(this.sentences[a]);
           this.sentences[a+1].active = true;
           this.sentences[a].exploded = true;
@@ -181,7 +181,7 @@ class PairsSeshNavigatingScreen extends React.Component {
           this.props.navigatingLines[1]++;
         }
       else {
-        new Audio ("./app/assets/sounds/missed.wav").play();
+        new Audio (window.assets.sounds['missed.wav']).play();
         this.sentences[a].active=false;
         this.sentences[a].text="💩".repeat(Math.floor(this.sentences[a].text.length/3));
         this.sentences[a].done = true;
@@ -217,7 +217,7 @@ class PairsSeshNavigatingScreen extends React.Component {
         width="800"
         height="520"/>
 
-      <img src="./app/assets/images/computer_screen2.png" className="pairs-computer-screen-nav"/>
+      <img src={window.assets.images['computer_screen2.png']} className="pairs-computer-screen-nav"/>
         <div className="pairs-input-text">
           <textarea id="pairs-input-nav"
             value={this.state.currentInput}

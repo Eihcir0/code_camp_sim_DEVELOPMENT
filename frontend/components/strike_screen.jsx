@@ -9,7 +9,7 @@ class StrikeScreen extends React.Component {
     this.strike = this.player.newStrike;
 
     this.startTime = Date.now();
-    this.buzzerSound = new Audio("./app/assets/sounds/buzzer.mp3");
+    this.buzzerSound = new Audio(window.assets.sounds['buzzer.mp3']);
     this.buzzerSound.play();
     if (this.player.onFire) {this.player.onFire=false;}
     this.player.strikes = this.player.strikes + "X";
@@ -52,7 +52,7 @@ class StrikeScreen extends React.Component {
     return (
       <div className="strike" onClick={this.handleClick}>
         <span className="x">X</span>
-        <img src="./app/assets/images/ned1.png" className="strike-teacher-image"/>
+        <img src={window.assets.images['ned1.png']} className="strike-teacher-image"/>
       </div>
     );
   }

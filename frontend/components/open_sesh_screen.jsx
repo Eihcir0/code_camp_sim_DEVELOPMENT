@@ -1,5 +1,4 @@
 import React from 'react';
-import firebase from '../../app/utils/firebase';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchUser, updateUser, fetchUserData, setUserData}  from '../../app/redux-actions/firebase_actions';
@@ -30,6 +29,11 @@ class OpenSesh extends React.Component {
     this.render = this.render.bind(this);
     this.checkForDoneSprites = this.checkForDoneSprites.bind(this);
     this.checkFocus = this.checkFocus.bind(this);
+
+    this.background = new Image();
+    this.background.src = window.assets.images['newfloor.png'];
+    this.microwaveSound = new Audio(window.assets.sounds['microwave_start.wav']);
+
 
     this.quadrants = this.quadrants.bind(this);
     this.mouseOverWorkStation = this.mouseOverWorkStation.bind(this);
@@ -64,9 +68,8 @@ class OpenSesh extends React.Component {
     this.sprites = [];
     this.player.ateDonut = false;
     this.leavingTime = false;
-    this.background = new Image();
-    this.background.src = './app/assets/images/newfloor.png';
   }//end constructor
+
 
   componentDidMount() {
     this.canvas = document.getElementById('canvas');
@@ -80,10 +83,9 @@ class OpenSesh extends React.Component {
     this.initializeSprites();
     this.hover1 = document.getElementById('hover1');
     this.player.clock.animTickerCount = this.player.clock.tickCounter + 5 - 5;
-    this.background.onload = () => {
-      this.player.clock.unpause();
-      this.main();
-    };
+    this.player.clock.unpause();
+    this.main();
+
   }
 
 
@@ -305,6 +307,7 @@ class OpenSesh extends React.Component {
        this.player.day.eatingLunch = true;
        this.lunchTime = now;
        this.lunchMinutes = 15;
+       document.body.style.cursor = 'wait';
        this.player.clock = new Clock(now, this.player.defaultClockSpeed*4);
    }
 
@@ -324,7 +327,7 @@ class OpenSesh extends React.Component {
      }
    }
 
-   getCandanessaMessage() {
+   getCandanessaMessage() { //change this to a module
      var x = Math.floor(Math.random()*5)+1;
      switch (x) {
        case 1:
@@ -378,8 +381,7 @@ class OpenSesh extends React.Component {
 
   eatsLunch() {
     if (!(this.player.day.ateLunch)) {
-      this.microwaveSound = new Audio("./app/assets/sounds/microwave_start.wav");
-      window.setTimeout(()=>this.microwaveSound.play(),100);
+      this.microwaveSound.play();
       this.player.day.eatingLunch = true;
       this.player.tempMessage = "TAKING LUNCH BREAK";
       this.player.focus = 100;
@@ -398,11 +400,13 @@ class OpenSesh extends React.Component {
   }
 
   endLunch() {
+    document.body.style.cursor = 'auto';
     if (this.player.talkingToCandanessa) {
       this.player.talkingToCandanessa = false;
       this.player.day.talkedToCandanessa = true;
       this.player.day.eatingLunch = false; //should rename this
     } else {
+
     this.microwaveSound.pause();
     this.microwaveSound = undefined;
     this.player.day.eatingLunch = false;
@@ -541,26 +545,6 @@ class OpenSesh extends React.Component {
 
   leavingEarly() {
     this.player.tempMessage = "🚧 Leave school early feature is in development 🚧";
-
-
-
-    // var now = this.player.clock.time();
-    // this.player.clock.pause();
-    // var strikes;
-    // switch (true) {
-    //   case this.player.clock.isBetween([6,0],[8,59]):
-    //     strikes = 4;
-    //     break;
-    //   case this.player.clock.isBetween([9,0],[9,29]):
-    //     strikes = 3;
-    //     break;
-    //   case this.player.clock.isBetween([9,30],[13,29]):
-    //     strikes = 2;
-    //     break;
-    //   default:
-    // }
-    // this.player.tempMessage = `ARE YOU SURE YOU WANT TO LEAVE EARLY?  You will receive ${strikes} strikes for missing the rest of the day's sessions.`;
-    // this.leavingTime = "early";
   }
 
   leaving() {

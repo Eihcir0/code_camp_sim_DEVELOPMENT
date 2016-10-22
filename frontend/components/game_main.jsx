@@ -1,5 +1,5 @@
 import React from 'react';
-import firebase from 'firebase';
+import firebase from 'firebase'; // DO I STILL NEED THIS?
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchUser, updateUser, fetchUserData, setUserData}  from '../../app/redux-actions/firebase_actions';
@@ -38,19 +38,22 @@ class GameMain extends React.Component {
       this.week = this.player.week;
     }
     this.player.clock.pause();
+
+
     // this.playerAnim = new playerAnim({player: this.player});
+
+    // this.imagesRef = firebase.storage().ref().child('images');
+    // this.soundsRef = firebase.storage().ref().child('sounds');
+    // this.loadImages = this.loadImages.bind(this);
+    // this.loadImages();
 
     this.state = {
       currentPos: -1,
       message: this.player.message,
       clock: this.player.clock.time(),
-      ruby: this.player.skills.ruby,
+      ruby: Math.round(this.player.skills[this.player.currentSkill]/10),
       focus: this.player.focus
         };
-        debugger;
-    this.imagesRef = firebase.storage().ref().child('images');
-    this.soundsRef = firebase.storage().ref().child('sounds');
-    this.faceIconsRef = this.imagesRef.child('face_icons');
     this.attributeTicker = 0;
     this.tick = this.tick.bind(this);
     this.updateAttributes = this.updateAttributes.bind(this);
@@ -61,8 +64,34 @@ class GameMain extends React.Component {
     this.ticksPerSecond = 100; //<<=If changed then update Clock class
     this.intervalTime = 1000 / this.ticksPerSecond;
     this.loaded = false;
+    this.render();
   }
 
+  // loadImages() {
+  //   this.imagesLoaded = false;
+  //   this.bed = {loaded: false};
+  //   this.happy = {loaded: false};
+  //   this.star = {loaded: false};
+  //   this.ruby = {loaded: false};
+  //   var that = this;
+  //   this.imagesRef.child('bed.png').getDownloadURL().then(function(url) {
+  //     that.bed.url = url;
+  //     that.bed.loaded = true;
+  //   });
+  //   this.imagesRef.child('happy.png').getDownloadURL().then(function(url) {
+  //     that.happy.url = url;
+  //     that.happy.loaded = true;
+  //   });
+  //   this.imagesRef.child('star.png').getDownloadURL().then(function(url) {
+  //     that.star.url = url;
+  //     that.star.loaded = true;
+  //   });
+  //   this.imagesRef.child('ruby.png').getDownloadURL().then(function(url) {
+  //     that.ruby.url = url;
+  //     that.ruby.loaded = true;
+  //   });
+  // }
+  //
   tick() {
     this.player.clock.tick();
     var dt = (this.player.clock.tickCounter - this.player.clock.lastTickerCount);
@@ -78,7 +107,7 @@ class GameMain extends React.Component {
     }
     this.setState({
       message: this.updateMessage(),
-      ruby: Math.floor(this.player.skills.ruby/10),
+      ruby: Math.round(this.player.skills[this.player.currentSkill]/10),
       focus: this.player.focus
     });
     //animationFramE ????
@@ -185,7 +214,7 @@ class GameMain extends React.Component {
         currentPos: -1,
         message: this.player.message,
         clock: this.player.clock.time(),
-        ruby: this.player.skills.ruby,
+        ruby: Math.round(this.player.skills[this.player.currentSkill]),
         focus: this.player.focus
       });
 
@@ -284,6 +313,8 @@ class GameMain extends React.Component {
 
 
   render() {
+    // "https://firebasestorage.googleapis.com/v0/b/code-camp-sim.appspot.com/o/images%2Fbed.png?alt=media&token=b8c0a970-74cc-4b2e-ab06-813c5f09fa21"
+
     return (
       <section>
         <span className="game-title">CODE CAMP SIM (ver 0.7.5)</span>
@@ -299,11 +330,11 @@ class GameMain extends React.Component {
             </div>
             <div className="stats-bar">
               <meter value={this.player.sleepBank} min="0" max="100" low="30" high="70" optimum="100"/>
-              <img className="icon" src="https://firebasestorage.googleapis.com/v0/b/code-camp-sim.appspot.com/o/images%2Fbed.png?alt=media&token=b8c0a970-74cc-4b2e-ab06-813c5f09fa21" />
+              <img className="icon" src={window.assets.images["bed.png"] ? window.assets.images["bed.png"] : null} />
               <meter value={this.player.happiness} min="0" max="100" low="30" high="70" optimum="100"/>
-              <img className="icon" src={firebase.storage().ref().child('images/happy.png').getDownloadURL()} />
+              <img className="icon" src={window.assets.images["happy.png"] ? window.assets.images["happy.png"] : null} />
               <meter value={this.player.focus} min="0" max="100" low="30" high="70" optimum="100"/>
-              <img className="icon" src="./app/assets/images/star.png" /><br/>
+              <img className="icon" src={window.assets.images["star.png"] ? window.assets.images["star.png"] : null} /><br/>
               <span className="score">{this.player.score}</span><br/>
               <span className="player-title">
                 <br/>LEVEL: {this.player.scoreTitle()}

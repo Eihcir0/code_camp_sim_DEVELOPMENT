@@ -21,10 +21,10 @@ class SleepMinigame extends React.Component {
 
     return (
       <div className="eyes-closed" >
-        <img src="./app/assets/images/moon.png"
+        <img src={window.assets.images['moon.png']}
           className="rays" style={starsStyle} />
           YOU ARE GETTING SLEEPY....VERY SLEEEPY....
-          <img src="./app/assets/images/sheep2.png" className="sheep-image" style={this.sheepStyle()}/>
+          <img src={window.assets.images['sheep2.png']} className="sheep-image" style={this.sheepStyle()}/>
     </div>
     );
   }

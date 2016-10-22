@@ -120,7 +120,7 @@ class PairsSeshScreen extends React.Component {
           current={this.current}
           player={this.props.player} />
 
-        <img className="pair-partner-img" src="./app/assets/images/frontface2.png"/>
+        <img className="pair-partner-img" src={window.assets.images['frontface2.png']}/>
 
         <button className="switch-button"
           onClick={this.handleClick}>SWITCH!</button>

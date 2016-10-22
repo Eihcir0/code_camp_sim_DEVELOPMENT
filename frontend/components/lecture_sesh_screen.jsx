@@ -16,7 +16,7 @@ class LectureSeshScreen extends React.Component {
     } else {
       startTime = this.player.clock.time();
     }
-    this.openingSound = new Audio("./app/assets/sounds/opening_lecture.wav");
+    this.openingSound = new Audio(window.assets.sounds['opening_lecture.wav']);
     window.setTimeout(()=>this.openingSound.play(),10);
     this.player.clock = new Clock(startTime, this.player.defaultClockSpeed);
     this.startingFocus = this.player.focus;
@@ -48,8 +48,8 @@ class LectureSeshScreen extends React.Component {
     this.updateGoesToSleepMeter = this.updateGoesToSleepMeter.bind(this);
     this.checkWinner = this.checkWinner.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.sleepSound = new Audio("./app/assets/sounds/Rock-a-bye Baby.mp3");
-    this.faintSound = new Audio("./app/assets/sounds/trippy.wav");
+    this.sleepSound = new Audio(window.assets.sounds['Rock-a-bye Baby.mp3']);
+    this.faintSound = new Audio(window.assets.sounds['trippy.wav']);
     this.faintSoundOn = false;
     this.xxinterval = setInterval(this.tick,50);
     this.lectureNotes = this.player.day.lectureNotes;
@@ -210,9 +210,9 @@ class LectureSeshScreen extends React.Component {
                 <li key={idx} id={idx}>
                   {line} <br/>
                 </li>)}
-              <img src="./app/assets/images/ned3-blur.png" className="teacher-image"/>
+              <img src={window.assets.images['ned3-blur.png']} className="teacher-image"/>
           </ul>
-          <img src="./app/assets/images/rays.jpeg"
+          <img src={window.assets.images['rays.jpeg']}
             className="rays" style={raysStyle} />
       </div>
       );}
@@ -221,7 +221,7 @@ class LectureSeshScreen extends React.Component {
             <ul id="lecture-slide" className="lecture-slide">
                 {this.slide().map((line, idx)=>
                   <li key={idx} id={idx}>{line}<br/></li>)}
-                <img src="./app/assets/images/ned3.png" className="teacher-image"/>
+                <img src={window.assets.images['ned3.png']} className="teacher-image"/>
             </ul>);
         }
       }
@@ -256,7 +256,7 @@ class LectureSeshScreen extends React.Component {
         this.faintSound.play();
         this.faintSoundOn = true;}
       else {
-        this.faintSound = new Audio("./app/assets/sounds/trippy.wav");
+        this.faintSound = new Audio(window.assets.sounds['trippy.wav']);
         this.faintSoundOn = false;
       }
       this.sleepSound.pause();
@@ -298,7 +298,7 @@ class LectureSeshScreen extends React.Component {
           style={faintStyle}
           >
 
-          <img src="./app/assets/images/eyes_open.png"
+          <img src={window.assets.images['eyes_open.png']}
             className="eyes"/>
           {button}
 
@@ -310,7 +310,7 @@ class LectureSeshScreen extends React.Component {
         <div className="eyes-open"
           onClick={this.handleCloseEyesOff}
           style={sleepStyle}>
-          <img src="./app/assets/images/eyes_closed.png"
+          <img src={window.assets.images['eyes_closed.png']}
             className="eyes"
             onClick={this.handleCloseEyesOff}
             />

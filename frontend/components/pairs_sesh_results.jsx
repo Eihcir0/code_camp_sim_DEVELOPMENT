@@ -9,26 +9,18 @@ class PairsSeshResults extends React.Component {
       this.startTime = Date.now();
       this.calculating=this.calculating.bind(this);
       this.ticker = 0;
-      new Audio("./app/assets/sounds/typing.wav").play();
+      new Audio(window.assets.sounds['typing.wav']).play();
       this.interval = window.setInterval(()=>this.ticker++,100);
       this.redStyle={color: "red"};
       this.greenStyle={color: "green"};
       this.graded=false;
       }
 
-    calculating() {
-
-      // if (this.ticker<20) {
-      // return <div><br/> Calculating results of todays pair programming...<br/><br/></div>;
-      // } else {
-      //   return <div><br/><br/><br/><br/></div>;
-      // }
-    }
 
     totalSwitches() {
       var totSwitches = this.props.goodSwitches + this.props.badSwitches;
       if (this.ticker===20) {
-        new Audio("./app/assets/sounds/explosion.wav").play();
+        new Audio(window.assets.sounds['explosion.wav']).play();
       }
       if (this.ticker<20) {
         return (
@@ -51,7 +43,7 @@ class PairsSeshResults extends React.Component {
 
     goodSwitches() {
       if (this.ticker===40) {
-        new Audio("./app/assets/sounds/explosion.wav").play();
+        new Audio(window.assets.sounds['explosion.wav']).play();
       }
       if (this.ticker<40) {
         return (
@@ -74,7 +66,7 @@ class PairsSeshResults extends React.Component {
 
     badSwitches() {
       if (this.ticker===60) {
-        new Audio("./app/assets/sounds/explosion.wav").play();
+        new Audio(window.assets.sounds['explosion.wav']).play();
       }
       if (this.ticker<60) {
         return (
@@ -124,14 +116,14 @@ class PairsSeshResults extends React.Component {
       }
       if (this.ticker===100) {
           if (["A","B"].includes(grade) && this.graded===false) {
-              new Audio("./app/assets/sounds/congrats-ding.wav").play();
+              new Audio(window.assets.sounds['congrats-ding.wav']).play();
               grade==="A" ? this.props.player.happiness+=20 : this.props.player.happiness+=10;
               this.graded=true;
           } else if (grade==="F" && this.graded===false) {
-              new Audio("./app/assets/sounds/buzzer.mp3").play();
+              new Audio(window.assets.sounds['buzzer.mp3']).play();
               this.props.player.happiness-=10;
               this.graded=true;
-          } else {new Audio("./app/assets/sounds/explosion.wav").play();
+          } else {new Audio(window.assets.sounds['explosion.wav']).play();
               if (grade==="D" && this.graded===false) {this.props.player.happiness-=3;}
               this.graded=true;
             }
@@ -173,7 +165,6 @@ class PairsSeshResults extends React.Component {
       return (
         <div className="pairs-results" onClick={this.handleClick}>
           <br/>
-          {this.calculating()}
           {this.totalSwitches()}
           {this.goodSwitches()}
           {this.badSwitches()}

@@ -18,11 +18,11 @@ class AssessmentSesh extends React.Component {
       passingScore: null,
       yourScoreStyle: {}
     };
-    this.passSound = new Audio("./app/assets/sounds/congrats-ding.wav");
-    // this.passSound.load();
-    this.failSound = new Audio("./app/assets/sounds/buzzer.mp3");
-    // this.failSound.load();
-    this.explosionSound = new Audio("./app/assets/sounds/explosion.wav");
+
+    this.passSound = new Audio(window.assets.sounds['congrats-ding.wav']);
+    this.failSound = new Audio(window.assets.sounds['buzzer.mp3']);
+    this.explosionSound = new Audio(window.assets.sounds['explosion.wav']);
+
     this.ticker = 0;
     this.done = false;
     this.tick = this.tick.bind(this);
@@ -41,8 +41,7 @@ class AssessmentSesh extends React.Component {
       if (this.ticker === 350){
         var score = 1; //
         this.explosionSound = "";
-        this.explosionSound = new Audio("./app/assets/sounds/explosion.wav");
-        this.explosionSound.autoplay = true;
+        this.explosionSound = new Audio(this.explosionSoundURL);
         this.explosionSound.autoplay = true;
 
         this.setState({score: score});}
@@ -51,7 +50,7 @@ class AssessmentSesh extends React.Component {
         this.setState({median: rand});}
       if (this.ticker === 450) {
         this.explosionSound = "";
-        this.explosionSound = new Audio("./app/assets/sounds/explosion.wav");
+        this.explosionSound = new Audio(this.explosionSoundURL);
         this.explosionSound.autoplay = true;
         this.setState({median: this.state.possiblePoints});}
       if (this.ticker < 550) { //********* MEAN
@@ -59,7 +58,7 @@ class AssessmentSesh extends React.Component {
         this.setState({mean: rand});}
       if (this.ticker === 550) {
         this.explosionSound = "";
-        this.explosionSound = new Audio("./app/assets/sounds/explosion.wav");
+        this.explosionSound = new Audio(this.explosionSoundURL);
         this.explosionSound.autoplay = true;
         rand =
           ((Math.floor( Math.random()*20 + 1 ) + 70) / 100)
@@ -71,7 +70,7 @@ class AssessmentSesh extends React.Component {
         this.setState({passingScore: rand});}
       if (this.ticker === 650) {
         this.explosionSound = "";
-        this.explosionSound = new Audio("./app/assets/sounds/explosion.wav");
+        this.explosionSound = new Audio(this.explosionSoundURL);
         this.explosionSound.autoplay = true;
         rand =
           ((Math.floor( Math.random()*20 + 1 ) + 75) / 100)
@@ -107,7 +106,7 @@ class AssessmentSesh extends React.Component {
     if (!(this.done)) {return null;}
 
     return (
-      <button onClick={this.handleDone}       className="assessment-button">continue</button>
+      <button onClick={this.handleDone} className="assessment-button">continue</button>
     );
   }
 
