@@ -21,7 +21,7 @@ class UserLogin extends Component {
   loginWithProvider(provider) {
     this.props.loginWithProvider(provider).then(data => {
       if (data.payload.errorCode)
-        this.setState({ message1: data.payload.errorMessage })
+        this.setState({ message1: data.payload.errorMessage });
       else
         // this.props.fetchUserData(this.)
         browserHistory.push('/profile');

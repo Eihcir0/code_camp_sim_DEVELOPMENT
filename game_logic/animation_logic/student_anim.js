@@ -29,43 +29,43 @@ class StudentAnim extends Moveable {
     switch (this.number) {
       case 1:
         this.image.src =
-        "./app/assets/images/student3.png";
+        window.assets.images['student3.png'];
         break;
       case 2:
         this.image.src =
-        "./app/assets/images/student2.png";
+        window.assets.images['student2.png'];
         break;
       case 3:
         this.image.src =
-        "./app/assets/images/student1.png";
+        window.assets.images['student1.png'];
         break;
       case 4:
         this.image.src =
-        "./app/assets/images/student4.png";
+        window.assets.images['student4.png'];
         break;
       case 5:
         this.image.src =
-        "./app/assets/images/student4.png";
+        window.assets.images['student4.png'];
         break;
       case 6:
         this.image.src =
-        "./app/assets/images/student6.png";
+        window.assets.images['student6.png'];
         break;
       case 7:
         this.image.src =
-        "./app/assets/images/student6.png";
+        window.assets.images['student6.png'];
         break;
       case 8:
         this.image.src =
-        "./app/assets/images/student4.png";
+        window.assets.images['student4.png'];
         break;
       case 9:
         this.image.src =
-        "./app/assets/images/student5.png";
+        window.assets.images['student5.png'];
         break;
       case 10:
         this.image.src =
-        "./app/assets/images/student5.png";
+        window.assets.images['student5.png'];
         break;
       default:
 

@@ -17,12 +17,11 @@ class FaceAnim extends React.Component {
   }
 
   componentDidMount() {
-    this.interval = window.setInterval(this.getFace,200);
+    this.interval = window.setInterval(this.getFace,100);
   }
 
   getDiv(filename) {
-
-    var fullName = window.assets.faceIcons[`${filename}.jpg`];
+    var fullName = `./app/assets/images/face_icons/${filename}.jpg`;
     return (
       <div>
         <img className="player-pic"
@@ -56,7 +55,6 @@ class FaceAnim extends React.Component {
       }
     }
     if (this.player.newFace) {
-      console.log(this.player.newFace);
       this.face=this.getDiv(this.player.newFace.filename);
       this.player.newFace.duration--;
       if (this.player.newFace.duration<=0) {this.player.newFace=false;}
@@ -145,11 +143,9 @@ class FaceAnim extends React.Component {
     }
   }
 
-    render() {
-      return this.state.face;
-    }
-
-
+  render() {
+    return this.state.face;
+  }
 
 }//end class
 

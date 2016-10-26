@@ -1,5 +1,4 @@
 import React from 'react';
-import Assets from './utils/assets.js';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
@@ -15,7 +14,6 @@ import routes from './routes';
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 const store = createStoreWithMiddleware(reducers);
 window.store = store; // delete this later
-window.assets = new Assets; // keep this!!!
 
 
 

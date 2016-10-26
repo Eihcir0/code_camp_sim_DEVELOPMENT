@@ -90,7 +90,6 @@ table {
 }
 
 .game-center-screen {
-  background-image: image("/Users/Eihcir0/Desktop/code_camp_sim/app/assets/images/floor.png");
   height: 500px;
   width: 800px;
   background-color: grey;

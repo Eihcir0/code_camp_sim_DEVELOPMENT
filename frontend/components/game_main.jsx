@@ -1,14 +1,9 @@
 import React from 'react';
 import firebase from 'firebase'; // DO I STILL NEED THIS?
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {fetchUser, updateUser, fetchUserData, setUserData}  from '../../app/redux-actions/firebase_actions';
-
-
 import Player from './../../game_logic/player.js';
 import Clock from './../../game_logic/clock.js';
 import Week from './../../game_logic/week.js';
-import playerAnim from './../../game_logic/animation_logic/player_anim.js';
+
 import OpenSeshScreen from './open_sesh_screen.jsx';
 import LectureSeshScreen from './lecture_sesh_screen.jsx';
 import NightSeshScreen from './night_sesh_screen.jsx';
@@ -21,37 +16,27 @@ import FaceAnim from './face_anim.jsx';
 //and asks if they want to create an account
 
 class GameMain extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     //HAVE TO DEAL WITH ATE LUNCH SHIT - reset each day, these should be tracked in day
-    // var obj = this.props.userData;
+    this.player = new Player(this.props.player);
 
-    //SUPER FUCKING JANKY:
-    this.player = new Player();
-    this.player.loading = true;
-    if (this.player.week===undefined) {
-      this.week = new Week(this.player);
-      this.player.week = this.week;
-      this.player.day = this.week.day;
-    } else {
-      this.week = this.player.week;
-    }
+    this.player.loading = true;  // this is used to turn on button, maybe try without it after implementation of passing player from profile
+    this.week = new Week(this.player);
+    this.player.week = this.week;
+    this.player.day = this.week.day;
     this.player.clock.pause();
+    this.player.assessments = []; // change to split
+    window.player = this.player;
 
 
-    // this.playerAnim = new playerAnim({player: this.player});
-
-    // this.imagesRef = firebase.storage().ref().child('images');
-    // this.soundsRef = firebase.storage().ref().child('sounds');
-    // this.loadImages = this.loadImages.bind(this);
-    // this.loadImages();
-
+    this.skillIcon = window.assets.images[`${this.player.currentSkill}.png`];
     this.state = {
       currentPos: -1,
       message: this.player.message,
       clock: this.player.clock.time(),
-      ruby: Math.round(this.player.skills[this.player.currentSkill]/10),
-      focus: this.player.focus
+      skill: Math.round(this.player.skills[this.player.currentSkill]/10),
+      focus: this.player.focus,
         };
     this.attributeTicker = 0;
     this.tick = this.tick.bind(this);
@@ -62,35 +47,9 @@ class GameMain extends React.Component {
     this.gameOver = this.gameOver.bind(this);
     this.ticksPerSecond = 100; //<<=If changed then update Clock class
     this.intervalTime = 1000 / this.ticksPerSecond;
-    this.loaded = false;
-    this.render();
+
   }
 
-  // loadImages() {
-  //   this.imagesLoaded = false;
-  //   this.bed = {loaded: false};
-  //   this.happy = {loaded: false};
-  //   this.star = {loaded: false};
-  //   this.ruby = {loaded: false};
-  //   var that = this;
-  //   this.imagesRef.child('bed.png').getDownloadURL().then(function(url) {
-  //     that.bed.url = url;
-  //     that.bed.loaded = true;
-  //   });
-  //   this.imagesRef.child('happy.png').getDownloadURL().then(function(url) {
-  //     that.happy.url = url;
-  //     that.happy.loaded = true;
-  //   });
-  //   this.imagesRef.child('star.png').getDownloadURL().then(function(url) {
-  //     that.star.url = url;
-  //     that.star.loaded = true;
-  //   });
-  //   this.imagesRef.child('ruby.png').getDownloadURL().then(function(url) {
-  //     that.ruby.url = url;
-  //     that.ruby.loaded = true;
-  //   });
-  // }
-  //
   tick() {
     this.player.clock.tick();
     var dt = (this.player.clock.tickCounter - this.player.clock.lastTickerCount);
@@ -106,13 +65,14 @@ class GameMain extends React.Component {
     }
     this.setState({
       message: this.updateMessage(),
-      ruby: Math.round(this.player.skills[this.player.currentSkill]/10),
+      skill: Math.round(this.player.skills[this.player.currentSkill]/10),
       focus: this.player.focus
     });
     //animationFramE ????
   }
 
   handleLeaving() {
+
     this.player.clock.pause();
     if (this.player.clock.is([2,0])) {
         this.player.tempMessage = `  You're exhausted.  Must go home now....Your current rank is ${this.player.scoreTitle()}.  Here are the results of the day.`;
@@ -198,28 +158,9 @@ class GameMain extends React.Component {
     }
 
     handleOpen() {
-      console.log(this.props.userData);
-      this.player = new Player(this.props.userData);
-      window.player = this.player;
-      this.player.assessments = []; // deleteme;
-      this.player.loading = true;
-      this.week = new Week(this.player);
-      this.player.week = this.week;
-      this.player.day = this.week.day;
-      this.player.clock.pause();
-      this.playerAnim = new playerAnim({player: this.player});
-
-      this.setState({
-        currentPos: -1,
-        message: this.player.message,
-        clock: this.player.clock.time(),
-        ruby: Math.round(this.player.skills[this.player.currentSkill]),
-        focus: this.player.focus
-      });
 
       this.player.clock.unpause();
-      this.player.loading = false;
-      this.loaded = true;
+      this.player.loading = false;  //using?
       this.interval = window.setInterval(this.tick,this.intervalTime);
     }
 
@@ -247,9 +188,6 @@ class GameMain extends React.Component {
       return <button className="leave-button-big" onClick={this.handleOpen}>
         PRESS TO START </button>;
       }
-    if (!(this.loaded)) {
-      return <div/>
-;    }
     if (this.player.newStrike) {
       this.player.clock.pause();
       return (
@@ -283,7 +221,7 @@ class GameMain extends React.Component {
         return (
           <OpenSeshScreen className="open-sesh"
             player={this.player}
-            playerAnim ={this.playerAnim}/>
+          />
       );
     }
   }
@@ -312,8 +250,6 @@ class GameMain extends React.Component {
 
 
   render() {
-    // "https://firebasestorage.googleapis.com/v0/b/code-camp-sim.appspot.com/o/images%2Fbed.png?alt=media&token=b8c0a970-74cc-4b2e-ab06-813c5f09fa21"
-
     return (
       <section>
         <span className="game-title">CODE CAMP SIM (ver 0.7.5)</span>
@@ -341,8 +277,8 @@ class GameMain extends React.Component {
               <br/><br/>
               <span className="current-subject">
                 SKILLS:
-                <img className="icon" src="./app/assets/images/ruby.png" />
-                 {this.state.ruby}% <br/>
+                <img className="icon" src={this.skillIcon} />
+                 {this.state.skill}% <br/>
               </span>
               <br/><span className="strikes">
                 STRIKES:  <br/>
@@ -352,7 +288,7 @@ class GameMain extends React.Component {
               <br/>
 
               <span className="player-name">{this.player.name}</span>
-              <FaceAnim player={this.player}/>
+                <FaceAnim player={this.player}/>
             </div>
             <div className="player-pic-holder">
             </div>
@@ -365,16 +301,5 @@ class GameMain extends React.Component {
 
 }//end component
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({fetchUser, fetchUserData, setUserData}, dispatch);
-}
 
-
-function mapStateToProps(state) {
-
-  return {currentUser: state.currentUser,
-          userData: state.userData};
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(GameMain);
+export default GameMain;

@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router';
 import {connect} from 'react-redux';
-import { Route, IndexRoute } from 'react-router';
+import { browserHistory, Route, IndexRoute } from 'react-router';
 import {bindActionCreators} from 'redux';
 import {fetchUser, updateUser, fetchUserData, setUserData}  from '../../redux-actions/firebase_actions';
 import GameMain from './../../../frontend/components/game_main.jsx';
 import firebase from 'firebase';
+import Assets from './../../utils/assets.js';
 
 
 
@@ -13,37 +15,33 @@ class UserProfile extends Component {
 
   constructor(props) {
     super(props);
-    if (!(this.props.currentUser)) {
-      const data = JSON.parse(localStorage.getItem(localStorage.key(1)));
-      if (!data.uid) {
-          replace({
-              pathname: '/login',
-              state: {
-                  nextPathname: nextState.location.pathname,
-              },
-          });
-      }
-    }
+    window.assets = new Assets; // keep this!!!
+
+    // if (!(this.props.currentUser)) {
+    //   const data = JSON.parse(localStorage.getItem(localStorage.key(1)));
+    //   if (!data.uid) {
+    //   browserHistory.push(`/login`);
+    //   }
+    // }
 
     // var userData = this.props.fetchUserData(userId);
     // console.log(userData);
     // this.props.setUserData(userId, "ham");
-    console.log(this.props.userData);
 
     this.state = {
       message: ''
     };
-
-
   }
 
+
+
+
   render() {
-  
+    console.log(this.props.userData);
     return (
-      <div className="col-md-6">
-        <GameMain />
-      </div>
-    );
+    <div className="col-md-6">
+      <GameMain player={this.props.userData} />
+    </div>);
   }
 
 }

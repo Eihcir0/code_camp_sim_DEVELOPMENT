@@ -59,13 +59,12 @@ class Player {
     };
 
     this.currentSkill = ["ruby","rails","sql","javaScript","react","redux"][this.weekNum - 1];
-    console.log(this.currentSkill);
     this.fireOff = this.fireOff.bind(this);
     this.newOnFire = this.newOnFire.bind(this);
     this.weekDayText = this.weekDayText.bind(this);
     this.day = undefined;
     this.week = undefined;
-
+    this.newFace = false;
   } // end constructor
 
   weekDayText() {

@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.screen = this.screen.bind(this);
-    this.props.fetchUser();
+
   }
 
   screen() {

@@ -7,7 +7,6 @@ class PairsSeshResults extends React.Component {
       super(props);
       this.handleClick = this.handleClick.bind(this);
       this.startTime = Date.now();
-      this.calculating=this.calculating.bind(this);
       this.ticker = 0;
       new Audio(window.assets.sounds['typing.wav']).play();
       this.interval = window.setInterval(()=>this.ticker++,100);

@@ -10,23 +10,37 @@ class Assets {
     this.images = new Object(null);
     this.sounds = new Object(null);
     this.faceIcons = new Object(null);
+    this.loaded = false;
     var that = this;
-    this.assetList.forEach( (asset) => {
+    var a;
+    this.assetList.forEach( (asset, idx) => {
+
       switch (asset[1]) {
         case 1:
           that.imagesRef.child(asset[0]).getDownloadURL().then(function(url) {
             that.images[asset[0]] = url;
+            // console.log(idx);
+            if (idx < 24) {
+            a = new Image();
+            a.onload = ()=>console.log("loaded " + asset[0]);
+            a.src = url;
+            // console.log(url);
+            }
           });
           break;
         case 2:
           that.faceIconsRef.child(asset[0]).getDownloadURL().then(function(url) {
             that.faceIcons[asset[0]] = url;
+            // var b = new Image();
+            // b.src = url;
+            // b = undefined;
           });
           break;
         case 3:
           that.soundsRef.child(asset[0]).getDownloadURL().then(function(url) {
             that.sounds[asset[0]] = url;
             var tester3 = new Audio(url);
+            tester3 = undefined;
           });
           break;
         default:
@@ -39,29 +53,12 @@ class Assets {
 
   assetListMaker() { // 1 = image, 2 = face icon, 3 = sound
     return ([
-      ['ned3-blur.png',1],
-      ['ned3.png',1],
-      ['rays.jpeg',1],
-      ['eyes_open.png',1],
-      ['eyes_closed.png',1],
       ['newfloor.png',1],
-      ['line_explosion.jpg',1],
-      ['computer_screen2.png',1],
-      ['frontface2.png',1],
-      ['moon.png',1],
-      ['sheep2.png',1],
-      ['ned1.png',1],
-      ['bug.png',1],
-      ['desks.png',1],
-      ['desks2.png',1],
-      ['fire.png',1],
-      ['coffee.png',1],
-      ['donut.png',1],
-      ['lunch.png',1],
       ['hero_spritesheet.png',1],
       ['hero_seated_spritesheet.png',1],
       ['secretary.png',1],
-      ['empty_secretary.png',1],
+      ['desks.png',1],
+      ['desks2.png',1],
       ['ruby.png',1],
       ['student1.png',1],
       ['student2.png',1],
@@ -72,6 +69,23 @@ class Assets {
       ["bed.png",1],
       ["happy.png",1],
       ["star.png",1],
+      ['ned3-blur.png',1],
+      ['ned3.png',1],
+      ['rays.jpeg',1],
+      ['eyes_open.png',1],
+      ['eyes_closed.png',1],
+      ['line_explosion.jpg',1],
+      ['computer_screen2.png',1],
+      ['frontface2.png',1],
+      ['moon.png',1],
+      ['sheep2.png',1],
+      ['ned1.png',1],
+      ['bug.png',1],
+      ['fire.png',1],
+      ['coffee.png',1],
+      ['donut.png',1],
+      ['lunch.png',1],
+      ['empty_secretary.png',1],
       ["ned2.png",1],
       ['rested_happy_look_left.jpg', 2],
       ['rested_unhappy_look_left.jpg', 2],
@@ -84,7 +98,10 @@ class Assets {
       ['on_fire5.jpg',2],
       ['on_fire6.jpg',2],
       ['on_fire7.jpg',2],
+      ['rested_teeth.jpg', 2],
+      ['tired_teeth.jpg', 2],
       ['rested_happy.jpg',2],
+      ['super_happy.jpg',2],
       ['tired_happy.jpg',2],
       ['tired_happy2.jpg',2],
       ['exhausted_sad.jpg',2],

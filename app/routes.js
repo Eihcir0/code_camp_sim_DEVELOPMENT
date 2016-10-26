@@ -10,11 +10,11 @@ import requireAuth from './utils/authenticated';
 
 
 export default (
-  <Route path="/"  component={App}>
+  <Route path="/" component={App}>
     <IndexRoute component={UserProfile} />
     <Route path="/login" component={UserLogin} />
     <Route path="/reset" component={ResetPassword} />
-    <Route path="/profile" onEnter={requireAuth} component={UserProfile}  />
+    <Route path="/profile" component={UserProfile}  />
   </Route>
 
 );

@@ -6,7 +6,7 @@ import {fetchUser, updateUser, fetchUserData, setUserData}  from '../../app/redu
 import Secretary from './../../game_logic/animation_logic/secretary.js';
 import Desk from './../../game_logic/animation_logic/desk.js';
 import Clock from './../../game_logic/clock.js';
-
+import playerAnim from './../../game_logic/animation_logic/player_anim.js';
 import StudyIconAnim from
  './../../game_logic/animation_logic/study_icon_anim.js';
 import FireAnim from
@@ -22,7 +22,7 @@ class OpenSesh extends React.Component {
     super(props);
     this.player = this.props.player;
     this.player.clock.pause();
-    this.playerAnim = this.props.playerAnim;
+    this.playerAnim = new playerAnim({player: this.player});
     this.main = this.main.bind(this);
     this.renderSprites = this.renderSprites.bind(this);
     this.update = this.update.bind(this);
@@ -31,6 +31,7 @@ class OpenSesh extends React.Component {
     this.checkFocus = this.checkFocus.bind(this);
 
     this.background = new Image();
+    this.background.onload = ()=>console.log("newfloor loaded from opensesh");
     this.background.src = window.assets.images['newfloor.png'];
     this.microwaveSound = new Audio(window.assets.sounds['microwave_start.wav']);
 
